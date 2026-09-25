@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+*/node_modules/
+.pnp
+.pnp.js
+
+# Expo
+.expo/
+*/.expo/
+dist/
+web-build/
+
+# Python / Django
+__pycache__/
+*/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+staticfiles/
+*/staticfiles/
+*.sqlite3
+
+# Environment Variables
+.env
+.env.local
+.env*.local
+
+# IDE
+.vscode/
+.idea/
+.claude/
+*/.claude/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
