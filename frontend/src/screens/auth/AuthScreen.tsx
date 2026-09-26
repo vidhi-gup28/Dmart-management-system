@@ -538,23 +538,40 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess, initialR
 
             {/* Switch to Register for Customer */}
             {selectedRole === 'CUSTOMER' && (
-              <View style={styles.switchModeRow}>
-                <Text style={styles.switchModeSub}>Don't have an account? </Text>
-                <TouchableOpacity onPress={() => setAuthMode('REGISTER')}>
-                  <Text style={styles.switchModeHighlight}>Sign Up</Text>
-                </TouchableOpacity>
-              </View>
+              <>
+                <View style={styles.switchModeRow}>
+                  <Text style={styles.switchModeSub}>Don't have an account? </Text>
+                  <TouchableOpacity onPress={() => setAuthMode('REGISTER')}>
+                    <Text style={styles.switchModeHighlight}>Sign Up</Text>
+                  </TouchableOpacity>
+                </View>
+
+                {/* Professional Internal Portal Access Link for Recruiters & Staff */}
+                <View style={styles.employeeAccessRow}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      handleSelectRole('ADMIN');
+                      if (onSwitchPortal) onSwitchPortal('ADMIN');
+                    }}
+                    activeOpacity={0.7}
+                    style={styles.employeeLinkBtn}
+                  >
+                    <Lock size={12} color="#EBD6DC" />
+                    <Text style={styles.employeeLinkText}>Store Employee & Management Portal →</Text>
+                  </TouchableOpacity>
+                </View>
+              </>
             )}
 
-            {/* Footer: Only show employee demo credentials when user is on internal staff/cashier/admin URL */}
+            {/* Footer: Show employee demo credentials & switcher when user is on internal staff/cashier/admin */}
             {selectedRole !== 'CUSTOMER' && (
               <View style={styles.demoCard}>
                 <View style={styles.demoCardHeader}>
                   <Sparkles size={12} color="#EBD6DC" />
-                  <Text style={styles.demoCardTitle}>DEMO EMPLOYEE CREDENTIALS</Text>
+                  <Text style={styles.demoCardTitle}>DEMO EMPLOYEE TERMINALS</Text>
                 </View>
                 <View style={styles.demoChipsGrid}>
-                  {(['STAFF', 'CASHIER', 'ADMIN'] as UserRole[]).map((r) => (
+                  {(['ADMIN', 'CASHIER', 'STAFF'] as UserRole[]).map((r) => (
                     <TouchableOpacity
                       key={r}
                       style={[styles.demoChip, selectedRole === r && styles.demoChipSelected]}
@@ -564,7 +581,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess, initialR
                       }}
                     >
                       <Text style={[styles.demoChipText, selectedRole === r && styles.demoChipTextSelected]}>
-                        {r}: {DEMO_ACCOUNTS[r].name.split(' ')[0]}
+                        {r === 'ADMIN' ? '👑 Admin' : r === 'CASHIER' ? '💳 Cashier' : '👔 Staff'}
                       </Text>
                     </TouchableOpacity>
                   ))}
